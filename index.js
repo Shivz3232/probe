@@ -5,7 +5,7 @@ const { MemcacheClient } = require("memcache-client");
 const app = express();
 
 const cacheClient = new MemcacheClient({
-  server: "inovact-user-profiles.jexcqs.cfg.aps1.cache.amazonaws.com:11211",
+  server: "inovact-user-profiles.jexcqs.0001.aps1.cache.amazonaws.com:11211",
 });
 
 app.use(express.json());
@@ -26,7 +26,7 @@ app.post("/elasticache/write", async (req, res) => {
 })
 
 app.get("/elasticache/read", async (req, res) => {
-  const { key } = req.body;
+  const { key } = req.query;
 
   const result = await cacheClient.get(key);
 
@@ -36,6 +36,15 @@ app.get("/elasticache/read", async (req, res) => {
   res.end();
 })
 
+// {
+//   "method": "",
+//   "host": "",
+//   "port": 80,
+//   "path": "",
+//   "headers": {},
+//   "querystring": "",
+//   "body": {}
+// }
 app.post("/", async (req, res) => {
   const { method, host, port, path, headers, querystring, body } = req.body;
 
